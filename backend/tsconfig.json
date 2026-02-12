@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "target": "ES2020",
+  
+      "outDir": "./dist",
+      "sourceMap": true,
+      "declaration": true,
+  
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+  
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+  
+      "incremental": true,
+      "skipLibCheck": true,
+  
+      "strictNullChecks": true,
+      "forceConsistentCasingInFileNames": true,
+      "noImplicitAny": false,
+      "strictBindCallApply": false,
+      "noFallthroughCasesInSwitch": false
+    }
+}

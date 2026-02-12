@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Providers {
+    local
+    jwt
+    google
+    github
+}
+
+model Building {
+    id Int @id @default(autoincrement())
+    title String
+    price Int
+    tiket Int 
+    yield Float 
+    sold Float
+    daysLeft Int
+    imageURL String
+
+}
+
+model User {
+    id Int @id @default(autoincrement())
+    username String
+    email String 
+    password String?
+    provider Providers @default(local)
+}
