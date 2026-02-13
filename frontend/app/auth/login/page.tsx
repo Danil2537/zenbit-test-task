@@ -1,39 +1,61 @@
 "use client";
 
-import { Button, Link, Stack, TextField } from "@mui/material";
-import NextLink from "next/link";
 import { useFormState } from "react-dom";
-import login from "./login";
+import login from "../../common/util/login";
+import Link from "next/link";
+import Image from "next/image";
+import getImage from "@/app/common/util/get-image";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const [state, formAction] = useFormState(login, { error: "" });
-
+  
+  const [imgUrl, setImgUrl] = useState<{ url: string; } | null>(null);
+  useEffect(()=>{
+    const getImgSrc = async () => {
+        const url = await getImage('login.png');
+        setImgUrl(url);
+      };
+      getImgSrc();
+  },[]);
   return (
-    <form action={formAction} className="w-full max-w-xs">
-      <Stack spacing={2}>
-        <TextField
-          error={!!state.error}
-          helperText={state.error}
+    <>
+    {imgUrl!==null && (<Image src={imgUrl.url} alt="image not found" width={500} height={800}/>)}
+    <form action={formAction} className="">
+      <div>
+        <input
           name="email"
-          label="Email"
-          variant="outlined"
           type="email"
+          placeholder="Email"
+          className=""
         />
-        <TextField
-          error={!!state.error}
-          helperText={state.error}
+        {state.error && (
+          <p className="">{state.error}</p>
+        )}
+      </div>
+
+      <div>
+        <input
           name="password"
-          label="Password"
-          variant="outlined"
           type="password"
+          placeholder="Password"
+          className=""
         />
-        <Button type="submit" variant="contained">
-          Login
-        </Button>
-        <Link component={NextLink} href="/auth/signup" className="self-center">
+      </div>
+
+      <button
+        type="submit"
+        className=""
+      >
+        Login
+      </button>
+
+      <div className="">
+        <Link href="/auth/signup" className="">
           Signup
         </Link>
-      </Stack>
+      </div>
     </form>
+    </>
   );
 }

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Container, CssBaseline } from "@mui/material";
-import Header from "./header/header";
+import Header from "./components/header";
 import Providers from "./providers";
 import authenticated from "./auth/authenticated";
 
@@ -15,18 +14,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const isAuthenticated = await authenticated();
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <Providers authenticated={isAuthenticated}>
-          <CssBaseline />
           <Header />
-          <Container>{children}</Container>
+          <main className="">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

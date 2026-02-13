@@ -2,17 +2,20 @@ import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Providers } from '../../../generated/prisma/client';
 
 export class CreateUserDTO {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  username: string;
+  username?: string;
 
+  @IsNotEmpty()
   @IsString()
   @IsEmail()
   email: string;
 
-  @IsOptional()
-  password?: string | null;
+  @IsNotEmpty()
+  @IsString()
+  password: string | null;
 
+  @IsOptional()
   @IsNotEmpty()
   provider?: Providers;
 }

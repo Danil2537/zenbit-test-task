@@ -1,24 +1,22 @@
 "use client";
 
-import { ThemeProvider } from "@mui/material";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { ReactElement } from "react";
-import darkTheme from "./dark.theme";
-import { AuthContext } from "./auth/auth-context";
+import { ReactNode, useEffect } from "react";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import { setAuthenticated } from "./store/reducers/authSlice";
 
 interface ProviderProps {
-  children: ReactElement[];
+  children: ReactNode;
   authenticated: boolean;
 }
 
-export default function Providers({ children, authenticated }: ProviderProps) {
-  return (
-    <AppRouterCacheProvider>
-      <ThemeProvider theme={darkTheme}>
-        <AuthContext.Provider value={authenticated}>
-          {children}
-        </AuthContext.Provider>
-      </ThemeProvider>
-    </AppRouterCacheProvider>
-  );
+export default function Providers({
+  children,
+  authenticated,
+}: ProviderProps) {
+  useEffect(() => {
+    store.dispatch(setAuthenticated(authenticated));
+  }, [authenticated]);
+
+  return <Provider store={store}>{children}</Provider>;
 }

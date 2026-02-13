@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-const unauthorizedRoutes = ["/auth/login", "/auth/signup"];
+const unauthorizedRoutes = ["/","/auth/login", "/auth/signup"];
 
 export function middleware(request: NextRequest) {
   const auth = request.cookies.get("Authentication")?.value;
