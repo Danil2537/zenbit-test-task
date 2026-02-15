@@ -1,36 +1,3 @@
-// import { cookies } from "next/headers";
-// import { API_URL } from "../constants/api";
-// import { getErrorMessage } from "./errors";
-
-// const getHeaders = () => ({
-//   Cookie: cookies().toString(),
-// });
-
-// export const post = async (path: string, formData: FormData) => {
-//   const res = await fetch(`${API_URL}/${path}`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json", ...getHeaders() },
-//     body: JSON.stringify(Object.fromEntries(formData)),
-//   });
-//   const data = await res.json();
-//   if (!res.ok) {
-//     return { error: getErrorMessage(data) };
-//   }
-//   return data;
-// };
-
-// export const get = async (path: string) => {
-//   const res = await fetch(`${API_URL}/${path}`, {
-//     headers: { ...getHeaders() },
-//   });
-//   if(res.ok) {
-//     return res.json();
-//   }
-//   else {
-//     return null;
-//   }
-// };
-
 import { cookies } from "next/headers";
 import { API_URL } from "../constants/api";
 import { getErrorMessage } from "./errors";
@@ -41,9 +8,13 @@ type FetchResult<T = any> = {
   error: string | null;
 };
 
-const getHeaders = () => ({
-  Cookie: cookies().toString(),
-});
+const getHeaders = async () => {
+    const cookieStore = cookies();
+    const cookieHeader = (await cookieStore).getAll().map(c => `${c.name}=${c.value}`).join("; ");
+    return {
+      Cookie: cookieHeader,
+    };
+  };
 
 const parseResponse = async <T>(res: Response): Promise<FetchResult<T>> => {
   let data: T | null = null;
@@ -70,7 +41,7 @@ export const post = async <T = any>(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...getHeaders(),
+      ...(await getHeaders()),
     },
     body: body ? JSON.stringify(body) : undefined,
   });
@@ -82,7 +53,7 @@ export const get = async <T = any>(
   path: string
 ): Promise<FetchResult<T>> => {
   const res = await fetch(`${API_URL}/${path}`, {
-    headers: { ...getHeaders() },
+    headers: { ...(await getHeaders()) },
   });
 
   return parseResponse<T>(res);

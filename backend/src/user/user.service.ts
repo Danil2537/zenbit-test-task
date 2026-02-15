@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Providers, User } from '../../generated/prisma/client';
 import { CreateUserDTO } from './DTO/createUser.dto';
@@ -13,6 +13,10 @@ export class UserService {
       ? await bcrypt.hash(createUserDTO.password, 10)
       : null;
 
+    const isExisting = await this.findByEmail(createUserDTO.email);
+    if (isExisting !== null) {
+      throw new BadRequestException('User with specified email already exist');
+    }
     return this.prisma.user.create({
       data: {
         username: createUserDTO.username ?? 'no_username',

@@ -1,15 +1,15 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import login from "../../common/util/login";
 import Link from "next/link";
 import Image from "next/image";
-import getImage from "@/app/common/util/get-image";
-import { useEffect, useState } from "react";
+import getImage from "@/app/shared/api/get-image";
+import { useActionState, useEffect, useState } from "react";
+import { loginAction } from "../server/actions";
 
 export default function Login() {
-  const [state, formAction] = useFormState(login, { error: "" });
+  const [state, formAction] = useActionState(loginAction, { error: "" });
   const [imgUrl, setImgUrl] = useState<{ url: string; } | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     const getImgSrc = async () => {
       const url = await getImage("login.png");
@@ -49,17 +49,21 @@ export default function Login() {
               <p className="mt-2 text-sm text-red-500">{state.error}</p>
             )}
           </div>
-          <div className="mb-2">
-            <label className="mb-2 block text-lg font-semibold text-black">
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              className="w-full rounded-lg border-2 border-[#E0E0E0] bg-[#E0E0E0] px-4 py-3 text-black placeholder-opacity-50 focus:border-[#B29F7E] focus:ring-2 focus:ring-[#B29F7E]"
-            />
-          </div>
+          <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full rounded-lg border-2 border-[#E0E0E0] bg-[#E0E0E0] px-4 py-3 pr-12 text-black placeholder-opacity-50 focus:border-[#B29F7E] focus:ring-2 focus:ring-[#B29F7E]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B29F7E]"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>  
           <div className="mb-6 text-right">
             <Link
               href="/auth/forgot-password"

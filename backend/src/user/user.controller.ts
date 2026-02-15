@@ -18,8 +18,6 @@ export class UserController {
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async getMe(@CurrentUser() payload: TokenPayload): Promise<User | null> {
-    console.log('lalala');
-    console.log(payload);
     return this.userService.findById(payload.userId);
   }
 }

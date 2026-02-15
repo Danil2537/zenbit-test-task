@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Merriweather, Lato } from "next/font/google";
 import "./globals.css";
-import Header from "./components/header";
+import Header from "./shared/components/header";
 import Providers from "./providers";
-import authenticated from "./auth/authenticated";
+import { isAuthenticated } from "./shared/utils/cookies";
 
 const merriweather = Merriweather({
     subsets: ["latin"],
@@ -27,12 +27,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isAuthenticated = await authenticated();
+  const isAuthed = await isAuthenticated();
 
   return (
     <html lang="en">
       <body className={`${merriweather.variable} ${lato.variable}`}>
-        <Providers authenticated={isAuthenticated}>
+        <Providers authenticated={isAuthed}>
           <Header />
           <main className="">
             {children}

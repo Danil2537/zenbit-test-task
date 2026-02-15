@@ -1,6 +1,6 @@
 "use server";
 
-import { get } from "./fetch";
+import { get } from "../utils/fetch";
 
 export default async function getImage(
   key: string
