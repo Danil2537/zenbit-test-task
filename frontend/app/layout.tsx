@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Merriweather, Lato } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
 import Providers from "./providers";
 import authenticated from "./auth/authenticated";
 
-const inter = Inter({ subsets: ["latin"] });
+const merriweather = Merriweather({
+    subsets: ["latin"],
+    variable: "--font-merriweather",
+    weight: ["300", "400", "700", "900"],
+  });
+  
+  const lato = Lato({
+    subsets: ["latin"],
+    variable: "--font-lato",
+    weight: ["300", "400", "700", "900"],
+  });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className={`${merriweather.variable} ${lato.variable}`}>
         <Providers authenticated={isAuthenticated}>
           <Header />
           <main className="">
