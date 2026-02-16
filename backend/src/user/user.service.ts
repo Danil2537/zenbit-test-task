@@ -19,17 +19,10 @@ export class UserService {
     }
     return this.prisma.user.create({
       data: {
-        // username: createUserDTO.username ?? 'no_username',
         email: createUserDTO.email,
         password,
         provider: createUserDTO.provider ?? Providers.local,
       },
-    });
-  }
-
-  async findOne(email: string): Promise<User | null> {
-    return this.prisma.user.findFirst({
-      where: { email },
     });
   }
 

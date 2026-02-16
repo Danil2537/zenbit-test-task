@@ -1,15 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import getImage from "../../shared/api/get-image";
-import Image from "next/image";
-import { Building } from "../types/building";
+import { useState, useEffect } from 'react';
+import getImage from '../../shared/api/get-image';
+import Image from 'next/image';
+import { Building } from '../types/building';
 
-export default function BuildingDisplay({
-  building,
-}: {
-  building: Building;
-}) {
+export default function BuildingDisplay({ building }: { building: Building }) {
   const [imgUrl, setImgUrl] = useState<{ url: string } | null>(null);
 
   useEffect(() => {
@@ -17,6 +13,7 @@ export default function BuildingDisplay({
       const url = await getImage(building.imageURL);
       setImgUrl(url);
     };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getImgSrc();
   }, [building.imageURL]);
 

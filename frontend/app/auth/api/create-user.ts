@@ -1,15 +1,18 @@
-"use server";
+'use server';
 
-import { post } from "@/app/shared/utils/fetch";
-import { loginAction } from "../server/actions";
+import { post } from '@/app/shared/utils/fetch';
+import { loginAction } from '../server/actions';
 
 type FormState = { error?: string };
 
 export default async function createUser(
   state: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
-  const { error: createError } = await post("user", Object.fromEntries(formData));
+  const { error: createError } = await post(
+    'user',
+    Object.fromEntries(formData),
+  );
 
   if (createError) {
     return { error: createError };

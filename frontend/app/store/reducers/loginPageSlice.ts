@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import getImage from "@/app/shared/api/get-image";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import getImage from '@/app/shared/api/get-image';
 
 type LoginPageState = {
   imgUrl: { url: string } | null;
@@ -14,14 +14,14 @@ const initialState: LoginPageState = {
 };
 
 export const fetchLoginImage = createAsyncThunk(
-  "loginPage/fetchImage",
+  'loginPage/fetchImage',
   async () => {
-    return await getImage("login.png");
-  }
+    return await getImage('login.png');
+  },
 );
 
 const loginPageSlice = createSlice({
-  name: "loginPage",
+  name: 'loginPage',
   initialState,
   reducers: {
     togglePassword(state) {
@@ -33,10 +33,13 @@ const loginPageSlice = createSlice({
       .addCase(fetchLoginImage.pending, (state) => {
         state.loadingImage = true;
       })
-      .addCase(fetchLoginImage.fulfilled, (state, action: PayloadAction<{ url: string } | null>) => {
-        state.imgUrl = action.payload;
-        state.loadingImage = false;
-      })
+      .addCase(
+        fetchLoginImage.fulfilled,
+        (state, action: PayloadAction<{ url: string } | null>) => {
+          state.imgUrl = action.payload;
+          state.loadingImage = false;
+        },
+      )
       .addCase(fetchLoginImage.rejected, (state) => {
         state.loadingImage = false;
       });

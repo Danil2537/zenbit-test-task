@@ -19,7 +19,6 @@ export class AuthService {
   login(user: User, response: Response) {
     const expires = new Date();
     const expiration = this.configService.getOrThrow<string>('JWT_EXPIRATION');
-    console.log('back login');
     expires.setMilliseconds(
       expires.getMilliseconds() + ms(expiration as StringValue),
     );
@@ -27,9 +26,7 @@ export class AuthService {
     const tokenPayload: TokenPayload = {
       userId: user.id,
     };
-    console.log('tkn pld: ', tokenPayload);
     const token = this.jwtService.sign(tokenPayload);
-    console.log(token);
     response.cookie('Authentication', token, {
       secure: false,
       httpOnly: true,

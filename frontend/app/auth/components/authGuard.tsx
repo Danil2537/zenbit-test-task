@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { ReactNode } from 'react';
+import { useAuth } from '../hooks/useAuth';
 
-
-type AuthGuardProps = {children:ReactNode};
+type AuthGuardProps = { children: ReactNode };
 
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated } = useAuth();

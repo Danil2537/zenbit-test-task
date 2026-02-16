@@ -15,7 +15,6 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log(JSON.stringify(user));
     return this.authService.login(user, response);
   }
 }

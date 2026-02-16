@@ -1,24 +1,30 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import getImage from "@/app/shared/api/get-image";
-import { useActionState, useEffect } from "react";
-import { loginAction } from "../server/actions";
-import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
-import { fetchLoginImage, togglePassword } from "@/app/store/reducers/loginPageSlice";
+import Link from 'next/link';
+import Image from 'next/image';
+import { useActionState, useEffect } from 'react';
+import { loginAction } from '../server/actions';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import {
+  fetchLoginImage,
+  togglePassword,
+} from '@/app/store/reducers/loginPageSlice';
 
 export default function Login() {
-    const [state, formAction] = useActionState(loginAction, { error: "" });
+  const [state, formAction] = useActionState(loginAction, { error: '' });
 
-    const dispatch = useAppDispatch();
-    const { imgUrl, showPassword } = useAppSelector((s) => s.loginPage);
-  
-    useEffect(() => {
-      dispatch(fetchLoginImage());
-    }, [dispatch]);
+  const dispatch = useAppDispatch();
+  const { imgUrl, showPassword } = useAppSelector((s) => s.loginPage);
+
+  useEffect(() => {
+    const runDispatch = async () => {
+      await dispatch(fetchLoginImage());
+    };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    runDispatch();
+  }, [dispatch]);
   return (
-    <div className="flex min-h-screen w-full">      
+    <div className="flex min-h-screen w-full">
       <div className="relative hidden md:block w-[60%]">
         {imgUrl && (
           <Image
@@ -31,10 +37,7 @@ export default function Login() {
         )}
       </div>
       <div className="flex w-full md:w-[40%] items-center justify-center bg-white px-6">
-        <form
-          action={formAction}
-          className="w-full max-w-[360px]"
-        >
+        <form action={formAction} className="w-full max-w-[360px]">
           <div className="mb-6">
             <label className="mb-2 block text-lg font-semibold text-black">
               Email
@@ -50,20 +53,20 @@ export default function Login() {
             )}
           </div>
           <div className="relative">
-              <input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                className="w-full rounded-lg border-2 border-[#E0E0E0] bg-[#E0E0E0] px-4 py-3 pr-12 text-black placeholder-opacity-50 focus:border-[#B29F7E] focus:ring-2 focus:ring-[#B29F7E]"
-              />
-              <button
-                type="button"
-                onClick={() => dispatch(togglePassword())}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B29F7E]"
-              >
-                {showPassword ? "Hide" : "Show"}
-              </button>
-            </div>  
+            <input
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              className="w-full rounded-lg border-2 border-[#E0E0E0] bg-[#E0E0E0] px-4 py-3 pr-12 text-black placeholder-opacity-50 focus:border-[#B29F7E] focus:ring-2 focus:ring-[#B29F7E]"
+            />
+            <button
+              type="button"
+              onClick={() => dispatch(togglePassword())}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B29F7E]"
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
           <div className="mb-6 text-right">
             <Link
               href="/auth/forgot-password"
@@ -80,7 +83,7 @@ export default function Login() {
           </button>
           <div className="mt-6 text-center">
             <p className="text-sm">
-              Don’t have an account?{" "}
+              Don’t have an account?{' '}
               <Link
                 href="/auth/signup"
                 className="font-semibold text-[#B29F7E]"

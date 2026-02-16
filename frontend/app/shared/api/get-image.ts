@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { get } from "../utils/fetch";
+import { get } from '../utils/fetch';
 
 export default async function getImage(
-  key: string
+  key: string,
 ): Promise<{ url: string } | null> {
   const { data } = await get<{ url: string }>(`bucket/${key}`);
   return data;

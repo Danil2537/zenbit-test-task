@@ -20,9 +20,7 @@ async function bootstrap() {
       'Accept',
       'Origin',
     ],
-    exposedHeaders: [
-      'Set-Cookie', // allow frontend to see cookies in response
-    ],
+    exposedHeaders: ['Set-Cookie'],
   });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(process.env.PORT ?? 3000);

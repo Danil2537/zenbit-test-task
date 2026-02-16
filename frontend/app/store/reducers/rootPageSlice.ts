@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import getImage from "@/app/shared/api/get-image";
-import getBuildings from "@/app/buildings/api/get-Buildings";
-import { Building } from "@/app/buildings/types/building";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import getImage from '@/app/shared/api/get-image';
+import getBuildings from '@/app/buildings/api/get-Buildings';
+import { Building } from '@/app/buildings/types/building';
 
 type RootPageState = {
   cityImgUrl: { url: string } | null;
@@ -18,21 +18,21 @@ const initialState: RootPageState = {
 };
 
 export const fetchCityImage = createAsyncThunk(
-  "rootPage/fetchCityImage",
+  'rootPage/fetchCityImage',
   async () => {
-    return await getImage("root_unauth.png");
-  }
+    return await getImage('root_unauth.png');
+  },
 );
 
 export const fetchBuildings = createAsyncThunk(
-  "rootPage/fetchBuildings",
+  'rootPage/fetchBuildings',
   async () => {
     return await getBuildings();
-  }
+  },
 );
 
 const rootPageSlice = createSlice({
-  name: "rootPage",
+  name: 'rootPage',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -53,10 +53,13 @@ const rootPageSlice = createSlice({
       .addCase(fetchBuildings.pending, (state) => {
         state.loadingBuildings = true;
       })
-      .addCase(fetchBuildings.fulfilled, (state, action: PayloadAction<Building[] | null>) => {
-        state.buildings = action.payload ?? [];
-        state.loadingBuildings = false;
-      })
+      .addCase(
+        fetchBuildings.fulfilled,
+        (state, action: PayloadAction<Building[] | null>) => {
+          state.buildings = action.payload ?? [];
+          state.loadingBuildings = false;
+        },
+      )
       .addCase(fetchBuildings.rejected, (state) => {
         state.loadingBuildings = false;
       });
