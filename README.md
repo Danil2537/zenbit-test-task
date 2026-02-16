@@ -1,25 +1,58 @@
 # Zenbit Internship Test Task
 
-A small full-stack TypeScript web application built with NestJS (backend) and Next.js (frontend), featuring pages for root, login, signup, and a protected building display when logged in. Backend featuring api for retrieving images from cloudflare r2 bucket, cerating users, retrieving building objects from supabase postgres db through prisma, as well as httpOnly cookie jwt-based auth.
+A small full-stack TypeScript web application built with NestJS (backend) and Next.js (frontend), featuring pages for root, login, signup, and a protected building display when logged in. The backend provides APIs to retrieve images from a Cloudflare R2 bucket, create users, and fetch building objects from a PostgreSQL database using Prisma, as well as httpOnly cookie jwt-based auth.
+- [App Client](https://zenbit-internship-test-task.netlify.app/) 
+- [App API](https://zenbit-test-task-lu1k.onrender.com/)  
 
 ---
 
 # Project Requirements
 
-- Create a **Main Page** and **Login/Signup forms**.
-- Frontend:
-  - Open page with mobile adaptation.
-  - Implement using **React** and **Redux**.
-- Backend:
-  - Create an open API that accepts applications and stores them in the database.
-  - Implement authentication with **httpOnly cookies**.
-- Notes:
-  - After login, the header should hide login/register buttons.
-  - Upload the application to any server.
-  - Submit links to the live app and GitHub repository.
-  - Demonstrate your approach, user-focused thinking, and problem-solving.
+**Create a Main page and login form**
 
-Design reference: [Figma Design](https://www.figma.com/file/OmpRyHggnkIZ7Qr1c5o5gg/Untitled?type=design&node-id=7965-2&mode=design&t=sK1qga9e8bjQqN6B-0)
+***Frontend technical points:***
+Make an open page with mobile adaptation according to your own vision
+- React
+- Redux
+
+***Backend technical points:***
+Create an open API that will accept applications and save them in the database
+- NodeJs (Nest preferred framework)
+- Mysql/Postgress
+
+- [Figma Design](https://www.figma.com/file/OmpRyHggnkIZ7Qr1c5o5gg/Untitled?type=design&node-id=7965-2&mode=design&t=sK1qga9e8bjQqN6B-0)
+Notes: After user login header of the website would not have login|register button
+anymore
+
+Upload the application to any server,
+Post a link to the downloaded application and GitHub
+Leave these links in the "Video presentation from the developer" form sent with this
+assignment.
+
+Show what you can do, your approach to understanding the problem, think about what
+bottlenecks there might be, look at the result as a user, and not as a programmer.
+
+---
+
+# Feedback
+
+More than a week I spent on this certainly was too much. In my defense, there was a major prisma update since the last time I used it, and I didn't have electricity for almost 3 consecutive days. 
+
+Other than that, the task itself certainly was useful as a practice, especially for implementing auth, and creating a kind of 'fullstack' project with db, server and client, as well as cloud storage i used for images. Making all of that work together was the biggest part of my work. 
+I was pleasantly surprised to see figma designs instead of just descriptions. That's another positive about this task.
+
+But it also has negatives. 
+Specifically, the task description itself, which is pretty vague. I though by 'open' you mean publically accessible, so I hosted both server and client on cloud platforms. The backend should 'accept applications' but figma design doesn't contain any kind of interface for 'making' and 'application'. 
+I decided that the word 'application' must be connected to those 'deals' from the ui, so I created a backend endpoint for creating a new 'building' to store in the db. Hopefully, that is what you meant by this. 
+Also, in figma design, the root page is composed of two parts - one shown always ('get started'), one when logged in('open deals'). But it's not clear if the first part should stay or disappear when the user logs in. I decided to let it stay there, with the user having to scroll down to see 'open deals' part. 
+Also, it was not clear what deadline I have for this task. 
+I understand that guessing what the client wants is a part of dev's job, but still, the task description could be more precise.
+
+As of 'thinking about bottlenecks', I have a few thoughts about what can be improved in my code. 
+-My code doesn't have pagination when getting 'deals' to the ui, so if the user has a lot of them, it could slow the browser. Though, right now the 'deals' aren't even connected to users in the db, since it's not clear if they even should. 
+- The way I write .tsx components could be improved, making more smaller components to make them more modular. If right now, the entire header is one component, in future each button on it might be it's own.
+- Implementing signup/login with oauth proviers like google, github etc. would be an improvement, so the user would have choice when creating an account. 
+- I didn't do unit tests, since I already spent more than a week on this. I should've. 
 
 ---
 
@@ -61,7 +94,6 @@ Design reference: [Figma Design](https://www.figma.com/file/OmpRyHggnkIZ7Qr1c5o5
 {
   "email": "user@example.com",
   "password": "password123",
-  "username": "optionalUsername",
   "provider": "local"
 }
 ```
@@ -93,7 +125,7 @@ Design reference: [Figma Design](https://www.figma.com/file/OmpRyHggnkIZ7Qr1c5o5
   "yield": 12.5,
   "sold": 40,
   "daysLeft": 30,
-  "imageURL": "https://example.com/image.jpg"
+  "imageURL": " image.jpg" //object key for cloudflare r2 bucket
 }
 ```
 
