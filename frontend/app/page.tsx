@@ -18,7 +18,7 @@ export default function Home() {
     }, [dispatch]);
   return (
     <>
-          <section className="relative w-full min-h-[1024px]">
+          <section className="relative w-full min-h-screen">
             {cityImgUrl && (
               <Image
                 src={cityImgUrl.url}
@@ -29,20 +29,20 @@ export default function Home() {
               />
             )}
             <div className="absolute inset-0 bg-[#0f1a2b]/70" />
-            <div className="relative mx-auto flex h-[1024px] max-w-[1440px] items-center justify-center">
-              <div className="flex h-[270px] w-[1085px] flex-col items-center justify-between gap-[10px] text-center px-4">
+            <div className="relative mx-auto flex min-h-screen max-w-7xl items-center justify-center px-4">
+              <div className="flex max-w-3xl flex-col items-center gap-4 text-center">
                 <div className="flex flex-col items-center gap-[10px]">
-                  <h1 className="w-full font-[Merriweather] text-[64px] font-bold leading-[80px] text-white">
+                  <h1 className="font-bold text-white text-3xl sm:text-4xl md:text-6xl">
                     The chemical negatively charged
                   </h1>
-                  <p className="max-w-[822px] font-[Lato] text-[24px] leading-[32px] tracking-[-0.02em] text-white">
+                  <p className="text-white text-base sm:text-lg md:text-xl">
                     Numerous calculations predict, and experiments confirm, that the
                     force field reflects the beam, while the mass defect is not
                     formed. The chemical compound is negatively charged. Twhile the
                     mass defect is
                   </p>
                 </div>
-                <button className="flex h-[54px] w-[160px] items-center justify-center rounded-[8px] border border-white px-[24px] py-[10px] font-[Merriweather] text-[20px] font-bold leading-[34px] text-white transition hover:bg-white hover:text-[#172234]">
+                <button className="mt-4 rounded-lg border border-white px-6 py-3 text-white hover:bg-white hover:text-[#172234]transition">
                   Get Started
                 </button>
               </div>
