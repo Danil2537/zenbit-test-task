@@ -45,7 +45,7 @@ export default function Home() {
                 mass defect is
               </p>
             </div>
-            <button className="mt-4 rounded-lg border border-white px-6 py-3 text-white hover:bg-white hover:text-[#172234]transition">
+            <button className="mt-4 rounded-lg border border-white px-6 py-3 text-white hover:bg-blue-500 hover:text-[#172234] transition">
               Get Started
             </button>
           </div>

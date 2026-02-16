@@ -38,7 +38,7 @@ export default function Header() {
             </>
           ) : (
             <button
-              onClick={() => logout}
+              onClick={() => void logout()}
               className="rounded-md bg-white px-5 py-2 font-semibold text-[#172234] transition hover:bg-gray-100"
             >
               Sign out
