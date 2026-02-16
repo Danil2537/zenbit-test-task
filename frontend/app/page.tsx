@@ -32,7 +32,7 @@ export default function Home() {
           />
         )}
         <div className="absolute inset-0 bg-[#0f1a2b]/70" />
-        <div className="relative mx-auto flex min-h-screen max-w-7xl items-center justify-center px-4">
+        <div className="relative mx-auto flex min-h-screen max-w-8xl items-center justify-center px-4">
           <div className="flex max-w-3xl flex-col items-center gap-4 text-center">
             <div className="flex flex-col items-center gap-[10px]">
               <h1 className="font-bold text-white text-3xl sm:text-4xl md:text-6xl">
@@ -45,7 +45,7 @@ export default function Home() {
                 mass defect is
               </p>
             </div>
-            <button className="mt-4 rounded-lg border border-white px-6 py-3 text-white hover:bg-blue-500 hover:text-[#172234] transition">
+            <button className="mt-4 rounded-lg border-2 border-white px-6 py-3 text-white hover:bg-white hover:text-[#172234] transition">
               Get Started
             </button>
           </div>

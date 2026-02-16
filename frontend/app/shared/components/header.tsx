@@ -24,7 +24,7 @@ export default function Header() {
             <>
               <Link
                 href="/auth/login"
-                className="rounded-md border border-[#B29F7E] px-5 py-2 font-semibold text-[#B29F7E] transition hover:bg-[#B29F7E]/10"
+                className="rounded-md border-2 border-[#B29F7E] px-5 py-2 font-semibold text-[#B29F7E] transition hover:bg-[#B29F7E]/10"
               >
                 Log In
               </Link>
