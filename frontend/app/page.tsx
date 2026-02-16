@@ -1,33 +1,21 @@
 "use client";
-import getBuildings from "./buildings/api/get-Buildings";
-import { useState, useEffect } from "react";
-import getImage from "./shared/api/get-image";
+import { useEffect } from "react";
 import Image from "next/image";
 import BuildingDisplay from "./buildings/components/building";
 import AuthGuard from "./auth/components/authGuard";
-import { Building } from "./buildings/types/building";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { fetchCityImage, fetchBuildings } from "./store/reducers/rootPageSlice";
 
 
 export default function Home() {
-    const [cityImgUrl, setCityImgUrl] = useState<{ url: string } | null>(null);
-    
-    useEffect(() => {
-        const getImgSrc = async () => {
-        const url = await getImage("root_unauth.png");
-        setCityImgUrl(url);
-        };
-        getImgSrc();
-    }, []);
+    const dispatch = useAppDispatch();
 
-    const [buildings, setBuildings] = useState<Building[] | null>([]);
-      
+    const { cityImgUrl, buildings } = useAppSelector((s) => s.rootPage);
+  
     useEffect(() => {
-        const getBuilds = async () => {
-            const builds: Building[] | null = await getBuildings();
-            setBuildings(builds);
-        };
-        getBuilds();
-    }, []);
+      dispatch(fetchCityImage());
+      dispatch(fetchBuildings());
+    }, [dispatch]);
   return (
     <>
           <section className="relative w-full min-h-[1024px]">

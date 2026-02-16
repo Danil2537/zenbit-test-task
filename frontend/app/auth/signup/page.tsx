@@ -2,26 +2,21 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import getImage from "@/app/shared/api/get-image";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect } from "react";
 import createUser from "../api/create-user";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { fetchSignupImage, setEmailError, setPasswordError, togglePassword } from "@/app/store/reducers/signupPageSlice";
 
 
 export default function Signup() {
-  const [state, formAction] = useActionState(createUser, { error: "" });
-  const [imgUrl, setImgUrl] = useState<{ url: string } | null>(null);
+   const [state, formAction] = useActionState(createUser, { error: "" });
+const dispatch = useAppDispatch();
+const { imgUrl, showPassword, emailError, passwordError } =
+  useAppSelector((s) => s.signupPage);
 
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    const getImgSrc = async () => {
-      const url = await getImage("login.png");
-      setImgUrl(url);
-    };
-    getImgSrc();
-  }, []);
+useEffect(() => {
+  dispatch(fetchSignupImage());
+}, [dispatch]);
 
   function validateEmail(email: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -32,32 +27,32 @@ export default function Signup() {
     return /^(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password);
   }
 
-  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  function validateForm(e: React.SubmitEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget);
     const email = String(formData.get("email") || "");
     const password = String(formData.get("password") || "");
-
+  
     let valid = true;
-
+  
     if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
+      dispatch(setEmailError("Please enter a valid email address"));
       valid = false;
     } else {
-      setEmailError("");
+      dispatch(setEmailError(""));
     }
-
+  
     if (!validatePassword(password)) {
-      setPasswordError(
-        "Password must be at least 8 characters, ar lest 1 digit and at least 1 special character"
+      dispatch(
+        setPasswordError(
+          "Password must be at least 8 characters, at least 1 digit and 1 special character"
+        )
       );
       valid = false;
     } else {
-      setPasswordError("");
+      dispatch(setPasswordError(""));
     }
-
-    if (!valid) {
-      e.preventDefault();
-    }
+  
+    if (!valid) e.preventDefault();
   }
 
   return (
@@ -77,7 +72,7 @@ export default function Signup() {
       <div className="flex w-full md:w-[40%] items-center justify-center bg-white px-6">
         <form
           action={formAction}
-          onSubmit={handleSubmit}
+          onSubmit={validateForm}
           className="w-full max-w-[360px]"
         >
           <div className="mb-6">
@@ -112,7 +107,7 @@ export default function Signup() {
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((v) => !v)}
+                onClick={() => dispatch(togglePassword())}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B29F7E]"
               >
                 {showPassword ? "Hide" : "Show"}

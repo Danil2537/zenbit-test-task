@@ -19,7 +19,7 @@ export class UserService {
     }
     return this.prisma.user.create({
       data: {
-        username: createUserDTO.username ?? 'no_username',
+        // username: createUserDTO.username ?? 'no_username',
         email: createUserDTO.email,
         password,
         provider: createUserDTO.provider ?? Providers.local,
@@ -27,9 +27,9 @@ export class UserService {
     });
   }
 
-  async findOne(username: string): Promise<User | null> {
+  async findOne(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
-      where: { username },
+      where: { email },
     });
   }
 

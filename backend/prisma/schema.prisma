@@ -34,7 +34,7 @@ model Building {
 
 model User {
     id Int @id @default(autoincrement())
-    username String
+    // username String
     email String 
     password String?
     provider Providers @default(local)

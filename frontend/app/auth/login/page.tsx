@@ -3,20 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import getImage from "@/app/shared/api/get-image";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect } from "react";
 import { loginAction } from "../server/actions";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { fetchLoginImage, togglePassword } from "@/app/store/reducers/loginPageSlice";
 
 export default function Login() {
-  const [state, formAction] = useActionState(loginAction, { error: "" });
-  const [imgUrl, setImgUrl] = useState<{ url: string; } | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
-  useEffect(() => {
-    const getImgSrc = async () => {
-      const url = await getImage("login.png");
-      setImgUrl(url);
-    };
-    getImgSrc();
-  }, []);
+    const [state, formAction] = useActionState(loginAction, { error: "" });
+
+    const dispatch = useAppDispatch();
+    const { imgUrl, showPassword } = useAppSelector((s) => s.loginPage);
+  
+    useEffect(() => {
+      dispatch(fetchLoginImage());
+    }, [dispatch]);
   return (
     <div className="flex min-h-screen w-full">      
       <div className="relative hidden md:block w-[60%]">
@@ -58,7 +58,7 @@ export default function Login() {
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((v) => !v)}
+                onClick={() => dispatch(togglePassword())}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B29F7E]"
               >
                 {showPassword ? "Hide" : "Show"}
