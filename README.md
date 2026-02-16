@@ -49,7 +49,7 @@ Also, it was not clear what deadline I have for this task.
 I understand that guessing what the client wants is a part of dev's job, but still, the task description could be more precise.
 
 As of 'thinking about bottlenecks', I have a few thoughts about what can be improved in my code. 
--My code doesn't have pagination when getting 'deals' to the ui, so if the user has a lot of them, it could slow the browser. Though, right now the 'deals' aren't even connected to users in the db, since it's not clear if they even should. 
+- My code doesn't have pagination when getting 'deals' to the ui, so if the user has a lot of them, it could slow the browser. Though, right now the 'deals' aren't even connected to users in the db, since it's not clear if they even should. 
 - The way I write .tsx components could be improved, making more smaller components to make them more modular. If right now, the entire header is one component, in future each button on it might be it's own.
 - Implementing signup/login with oauth proviers like google, github etc. would be an improvement, so the user would have choice when creating an account. 
 - I didn't do unit tests, since I already spent more than a week on this. I should've. 
